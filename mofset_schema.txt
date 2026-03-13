@@ -1,0 +1,26 @@
+Schema di collegamento MOSFET (Canale N come IRLZ34N):
+
+ALIMENTATORE 12V:
+  - Positivo (+12V) ----> FILO ROSSO DEL LED
+  - Negativo (GND)  ----> PIN SOURCE DEL MOSFET
+                          |
+                          '---> GND ARDUINO
+
+ARDUINO:
+  - PIN 9 (PWM)     ----> (Resistenza 220 Ohm se l'hai messa) ----> PIN GATE DEL MOSFET
+  - GND             ----> Collgato al GND dell'alimentatore e al Source (molto importante!)
+
+MOSFET (IRLZ34N, guardandolo frontalmente, pin verso il basso, testo verso di te):
+  [ 1 - GATE ]
+    - Collegato al PIN 9 di Arduino (se lo desideri, tramite resistenza di protezione 220-330 ohm in serie)
+    - Collegato a una resistenza da 10K che poi va a GND (Pull-down per non far accendere il mosfet accidentalmente all'avvio)
+
+  [ 2 - DRAIN (Centrale + dissipatore) ]
+    - Collegato al FILO NERO DEL LED (Il rientro. Il mosfet sta "aprendo o chiudendo" il lato negativo)
+
+  [ 3 - SOURCE ]
+    - Collegato al GND dell'alimentatore 12V e al GND di Arduino (TUTTI i GND insieme).
+
+STRISCIA / PANNELLO LED 12V:
+  - Polo Positivo: All'alimentatore
+  - Polo Negativo: Al Drain del Mosfet

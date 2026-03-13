@@ -1,0 +1,30 @@
+graph TD
+    %% Alimentazione e Arduino
+    PSU[Alimentatore 12V]
+    ARDUINO[Arduino Nano]
+    LED[Striscia / Lampada LED]
+
+    %% Componenti Mosfet
+    MOSFET[MOSFET IRLZ34N\nPin 1: Gate\nPin 2: Drain\nPin 3: Source]
+    R10K[Resistenza 10K Ohm]
+    R220[Resistenza 220 Ohm\nOPZIONALE]
+
+    %% Connessioni +12V
+    PSU -- "+12V" --> LED_POS((Positivo LED))
+    LED_POS --> LED
+
+    %% Connessioni PWM dal Pin 9
+    ARDUINO -- "Pin 9\n(PWM)" --> R220
+    R220 --> GATE((Gate - Pin 1))
+    
+    %% Pull-down al Gate
+    GATE --> R10K
+    R10K --> GND_NET((Rete GND Comune))
+
+    %% Connessioni al Drain
+    LED -- "Negativo LED" --> DRAIN((Drain - Pin 2))
+
+    %% Connessioni al GND (Source, Arduino, PSU)
+    SOURCE((Source - Pin 3)) --> GND_NET
+    ARDUINO -- "Pin GND" --> GND_NET
+    PSU -- "GND" --> GND_NET
